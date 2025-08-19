@@ -16,7 +16,7 @@ uvicorn==0.25.0
 pydantic==2.5.3
 
 # Database
-sqlite3  # Built-in
+# sqlite3  # Built-in
 sqlalchemy==2.0.23  # Optional for advanced features
 
 # Data Processing
