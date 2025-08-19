@@ -1,0 +1,53 @@
+# Core Web Scraping
+beautifulsoup4==4.12.2
+lxml==4.9.3
+requests==2.31.0
+httpx==0.25.2
+aiohttp==3.9.1
+
+# Dynamic Content Scraping
+selenium==4.16.0
+playwright==1.40.0
+cloudscraper==1.2.71
+
+# API Framework
+fastapi==0.105.0
+uvicorn==0.25.0
+pydantic==2.5.3
+
+# Database
+sqlite3  # Built-in
+sqlalchemy==2.0.23  # Optional for advanced features
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.2
+openpyxl==3.1.2  # For Excel export
+
+# Utilities
+fake-useragent==1.4.0
+python-dotenv==1.0.0
+schedule==1.2.0
+apscheduler==3.10.4
+
+# Notifications
+aiogram==3.3.0  # Telegram bot
+email-validator==2.1.0
+
+# Logging & CLI
+loguru==0.7.2
+rich==13.7.0
+click==8.1.7
+
+# Testing (optional)
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Performance
+asyncio==3.4.3
+aiofiles==23.2.1
+
+# Additional Tools
+Pillow==10.1.0  # Image processing
+python-multipart==0.0.6  # File uploads
+redis==5.0.1  # Optional for caching
