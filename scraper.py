@@ -370,24 +370,41 @@ class SeleniumScraper(ScraperEngine):
 class CloudflareScraper(ScraperEngine):
     """Скрапер для сайтов с Cloudflare защитой"""
     
-    async def scrape(self, url: str) -> dict:
-        """Обход Cloudflare"""
+    async def scrape(self, url: str, selectors: dict = None, **kwargs) -> dict:
+        """Обход Cloudflare + опциональный парсинг по селекторам"""
         scraper = cloudscraper.create_scraper()
-        
+        headers = self.get_headers()
         try:
-            response = scraper.get(url)
-            soup = BeautifulSoup(response.text, 'html.parser')
-            
+            resp = scraper.get(url, headers=headers, timeout=config.REQUEST_TIMEOUT)
+            resp.raise_for_status()
+
+            soup = BeautifulSoup(resp.text, 'html.parser')
+
+            # Если прислали селекторы — вытащим по ним
+            if selectors:
+                data = {}
+                if isinstance(selectors, dict):
+                    for key, selector in selectors.items():
+                        if selector.startswith('//'):  # XPath
+                            tree = html.fromstring(resp.content)
+                            elems = tree.xpath(selector)
+                            data[key] = [e.text_content().strip() for e in elems]
+                        else:  # CSS
+                            elems = soup.select(selector)
+                            data[key] = [e.get_text(strip=True) for e in elems]
+                return {**data, "cloudflare_bypassed": True, "url": url}
+
+            # Иначе вернём HTML целиком
             return {
                 "url": url,
                 "title": soup.title.string if soup.title else None,
                 "html": str(soup),
-                "cloudflare_bypassed": True
+                "cloudflare_bypassed": True,
             }
-            
         except Exception as e:
             logger.error(f"Cloudflare bypass failed for {url}: {e}")
             raise
+
 
 class PlaywrightScraper(ScraperEngine):
     """Современный асинхронный скрапер на Playwright"""
