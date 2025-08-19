@@ -53,7 +53,7 @@ from email.mime.multipart import MIMEMultipart
 
 # Telegram уведомления
 from aiogram import Bot
-from aiogram.types import ParseMode
+from aiogram.enums import ParseMode
 
 # Логирование
 import logging
