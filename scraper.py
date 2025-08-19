@@ -1,7 +1,3 @@
-"""
-🕷️ UNIVERSAL WEB SCRAPER
-Профессиональный инструмент для сбора данных с любых сайтов
-"""
 
 import asyncio
 import aiohttp
