@@ -263,7 +263,7 @@ class ScraperEngine:
 class RequestsScraper(ScraperEngine):
     """Простой скрапер на requests + BeautifulSoup"""
     
-    async def scrape(self, url: str, selectors: dict = None) -> dict:
+    async def scrape(self, url: str, selectors: dict = None, **kwargs) -> dict:
         """Скрапинг с помощью requests"""
         headers = self.get_headers()
         
@@ -323,7 +323,7 @@ class SeleniumScraper(ScraperEngine):
         self.driver = webdriver.Chrome(options=options)
         self.driver.set_page_load_timeout(config.REQUEST_TIMEOUT)
     
-    async def scrape(self, url: str, wait_for: str = None, actions: list = None) -> dict:
+    async def scrape(self, url: str, wait_for: str = None, actions: list = None, **kwargs) -> dict:
         """Скрапинг динамических сайтов"""
         if not self.driver:
             self.setup_driver()
@@ -409,7 +409,7 @@ class CloudflareScraper(ScraperEngine):
 class PlaywrightScraper(ScraperEngine):
     """Современный асинхронный скрапер на Playwright"""
     
-    async def scrape(self, url: str, screenshot: bool = False) -> dict:
+    async def scrape(self, url: str, screenshot: bool = False, **kwargs) -> dict:
         """Скрапинг с Playwright"""
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=config.HEADLESS)
