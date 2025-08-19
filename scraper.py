@@ -868,12 +868,18 @@ class ScraperOrchestrator:
                 method = self._detect_best_method(url)
             
             scraper = self._get_scraper(method)
+
+            # Убираем пустые значения, чтобы не передавать None в сигнатуры
+
+            kwargs = {k: v for k, v in kwargs.items() if v is not None}
             
             # Скрапим данные
             data = await scraper.scrape(url, **kwargs)
             
             # Сохраняем результаты
             self.db.save_data(job_id, url, data)
+            
+            
             
             # Обновляем статус
             cursor = self.db.conn.cursor()
